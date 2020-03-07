@@ -56,6 +56,9 @@ This function should only modify configuration layer settings."
      (helm :variables
            avy-timeout-seconds 0.5)
      (lsp :variables
+          ;; specify the python command for the Microsoft Python Language Server
+          ;; https://github.com/emacs-lsp/lsp-python-ms/blob/master/lsp-python-ms.el#L77
+          lsp-python-ms-python-executable-cmd "python3"
           ;; disable lsp-ui-doc，避免弹出的doc窗口带出来黑屏的frame
           lsp-ui-doc-enable nil)
      ;; markdown
@@ -523,9 +526,6 @@ before packages are loaded."
   ;; setup flycheck using python3
   (setq flycheck-python-pycompile-executable "python3")
 
-  ;; specify the python command for the Microsoft Python Language Server
-  ;; https://github.com/emacs-lsp/lsp-python-ms/blob/master/lsp-python-ms.el#L77
-  (setq lsp-python-ms-python-executable-cmd "python3")
 
   )
 
