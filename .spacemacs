@@ -32,7 +32,9 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(html
+   '(javascript
+     yaml
+     html
      (python :variables
              python-backend 'lsp
              python-lsp-server 'mspyls
@@ -43,6 +45,20 @@ This function should only modify configuration layer settings."
              )
      (rust :variables
            rust-format-on-save t)
+     (go :variables
+         go-backend 'lsp
+         go-tab-width 4
+         go-format-before-save t
+         gofmt-command "goimports")
+     java
+     (c-c++ :variables
+            c-c++-backend 'lsp-clangd
+            c-c++-enable-clang-format-on-save t
+            c-c++-enable-google-style t
+            c-c++-enable-google-newline t
+            )
+     semantic
+     cscope
      dap
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
@@ -112,7 +128,7 @@ It should only modify the values of Spacemacs settings."
    ;; to compile Emacs 27 from source following the instructions in file
    ;; EXPERIMENTAL.org at to root of the git repository.
    ;; (default nil)
-   dotspacemacs-enable-emacs-pdumper nil
+   dotspacemacs-enable-emacs-pdumper t
 
    ;; Name of executable file pointing to emacs 27+. This executable must be
    ;; in your PATH.
@@ -210,9 +226,9 @@ It should only modify the values of Spacemacs settings."
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
                          spacemacs-dark
+                         leuven
                          doom-one-light
                          doom-gruvbox
-                         leuven
                          doom-one
                          doom-molokai
                          spacemacs-light
@@ -481,9 +497,9 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
   (setq configuration-layer-elpa-archives
         '(
-           ;; ("gnu" . "elpa.gnu.org/packages/")
-           ;; ("melpa" . "melpa.org/packages/")
-           ;; ("org" . "orgmode.org/elpa/")
+           ("gnu" . "elpa.gnu.org/packages/")
+           ("melpa" . "melpa.org/packages/")
+           ("org" . "orgmode.org/elpa/")
            ("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
            ("org-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
            ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
@@ -537,6 +553,7 @@ before packages are loaded."
 This is an auto-generated function, do not modify its content directly, use
 Emacs customize menu instead.
 This function is called at the very end of Spacemacs initialization."
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -551,8 +568,7 @@ This function is called at the very end of Spacemacs initialization."
  '(jdee-db-spec-breakpoint-face-colors (cons "#1B2229" "#525254"))
  '(objed-cursor-color "#e74c3c")
  '(package-selected-packages
-   (quote
-    (drag-stuff lsp-pyre web-mode web-beautify tagedit slim-mode scss-mode sass-mode pug-mode prettier-js impatient-mode simple-httpd helm-css-scss haml-mode emmet-mode counsel-css company-web web-completion-data add-node-modules-path toml-mode racer pos-tip helm-gtags ggtags flycheck-rust dap-mode lsp-treemacs bui lsp-mode dash-functional counsel-gtags counsel swiper ivy company cargo markdown-mode rust-mode ws-butler writeroom-mode visual-fill-column winum volatile-highlights vi-tilde-fringe uuidgen treemacs-projectile treemacs-persp treemacs-evil treemacs ht pfuture toc-org symon symbol-overlay string-inflection spaceline-all-the-icons spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode password-generator paradox spinner overseer org-bullets open-junk-file nameless move-text macrostep lorem-ipsum link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-xref helm-themes helm-swoop helm-purpose window-purpose imenu-list helm-projectile projectile helm-mode-manager helm-make helm-ls-git helm-flx helm-descbinds helm-ag google-translate golden-ratio flycheck-package package-lint flycheck pkg-info epl let-alist flycheck-elsa flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state iedit evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens smartparens paredit evil-args evil-anzu anzu eval-sexp-fu elisp-slime-nav editorconfig dumb-jump doom-modeline shrink-path all-the-icons memoize f dash s devdocs define-word column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile packed aggressive-indent ace-window ace-link ace-jump-helm-line helm avy helm-core popup which-key use-package pcre2el org-plus-contrib hydra lv hybrid-mode font-lock+ evil goto-chg undo-tree dotenv-mode diminish bind-map bind-key async)))
+   '(grizzl godoctor go-gen-test go-fill-struct flycheck-golangci-lint go-mode yaml-mode drag-stuff lsp-pyre web-mode web-beautify tagedit slim-mode scss-mode sass-mode pug-mode prettier-js impatient-mode simple-httpd helm-css-scss haml-mode emmet-mode counsel-css company-web web-completion-data add-node-modules-path toml-mode racer pos-tip helm-gtags ggtags flycheck-rust dap-mode lsp-treemacs bui lsp-mode dash-functional counsel-gtags counsel swiper ivy company cargo markdown-mode rust-mode ws-butler writeroom-mode visual-fill-column winum volatile-highlights vi-tilde-fringe uuidgen treemacs-projectile treemacs-persp treemacs-evil treemacs ht pfuture toc-org symon symbol-overlay string-inflection spaceline-all-the-icons spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode password-generator paradox spinner overseer org-bullets open-junk-file nameless move-text macrostep lorem-ipsum link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-xref helm-themes helm-swoop helm-purpose window-purpose imenu-list helm-projectile projectile helm-mode-manager helm-make helm-ls-git helm-flx helm-descbinds helm-ag google-translate golden-ratio flycheck-package package-lint flycheck pkg-info epl let-alist flycheck-elsa flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state iedit evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens smartparens paredit evil-args evil-anzu anzu eval-sexp-fu elisp-slime-nav editorconfig dumb-jump doom-modeline shrink-path all-the-icons memoize f dash s devdocs define-word column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile packed aggressive-indent ace-window ace-link ace-jump-helm-line helm avy helm-core popup which-key use-package pcre2el org-plus-contrib hydra lv hybrid-mode font-lock+ evil goto-chg undo-tree dotenv-mode diminish bind-map bind-key async))
  '(rustic-ansi-faces
    ["#1c1e1f" "#e74c3c" "#b6e63e" "#e2c770" "#268bd2" "#fb2874" "#66d9ef" "#d6d6d4"])
  '(vc-annotate-background "#1c1e1f")
