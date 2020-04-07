@@ -31,6 +31,11 @@ This function should only modify configuration layer settings."
    dotspacemacs-configuration-layer-path '()
 
    ;; List of configuration layers to load.
+   ;; ----------------------------------------------------------------
+   ;; Example of useful layers you may want to use right away.
+   ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
+   ;; `M-m f e R' (Emacs style) to install them.
+   ;; ----------------------------------------------------------------
    dotspacemacs-configuration-layers
    '(javascript
      yaml
@@ -60,11 +65,6 @@ This function should only modify configuration layer settings."
      semantic
      cscope
      dap
-     ;; ----------------------------------------------------------------
-     ;; Example of useful layers you may want to use right away.
-     ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
-     ;; `M-m f e R' (Emacs style) to install them.
-     ;; ----------------------------------------------------------------
      auto-completion
      better-defaults
      emacs-lisp
