@@ -76,8 +76,9 @@ This function should only modify configuration layer settings."
           ;; specify the python command for the Microsoft Python Language Server
           ;; https://github.com/emacs-lsp/lsp-python-ms/blob/master/lsp-python-ms.el#L77
           lsp-python-ms-python-executable-cmd "python3"
-          ;; disable lsp-ui-doc，避免弹出的doc窗口带出来黑屏的frame
-          lsp-ui-doc-enable nil)
+          lsp-ui-doc-enable t
+          lsp-rust-server 'rust-analyzer
+          )
      ;; markdown
      multiple-cursors
      (org :variables
@@ -543,6 +544,9 @@ before packages are loaded."
   ;; setup flycheck using python3
   (setq flycheck-python-pycompile-executable "python3")
 
+  ;; EmacsClient
+  (evil-leader/set-key
+    "q q" 'spacemacs/frame-killer)
 
   )
 
