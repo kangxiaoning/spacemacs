@@ -37,7 +37,8 @@ This function should only modify configuration layer settings."
    ;; `M-m f e R' (Emacs style) to install them.
    ;; ----------------------------------------------------------------
    dotspacemacs-configuration-layers
-   '(sql
+   '(
+     sql
      javascript
      yaml
      html
@@ -76,8 +77,10 @@ This function should only modify configuration layer settings."
           ;; specify the python command for the Microsoft Python Language Server
           ;; https://github.com/emacs-lsp/lsp-python-ms/blob/master/lsp-python-ms.el#L77
           lsp-python-ms-python-executable-cmd "python3"
-          lsp-ui-doc-enable t
+          lsp-ui-doc-enable nil
           lsp-rust-server 'rust-analyzer
+          ;; lsp-rust-server 'lsp
+          lsp-enable-file-watchers nil
           )
      ;; markdown
      multiple-cursors
@@ -141,9 +144,9 @@ It should only modify the values of Spacemacs settings."
    ;; portable dumper in the cache directory under dumps sub-directory.
    ;; To load it when starting Emacs add the parameter `--dump-file'
    ;; when invoking Emacs 27.1 executable on the command line, for instance:
-   ;;   ./emacs --dump-file=~/.emacs.d/.cache/dumps/spacemacs.pdmp
-   ;; (default spacemacs.pdmp)
-   dotspacemacs-emacs-dumper-dump-file "spacemacs.pdmp"
+   ;;   ./emacs --dump-file=$HOME/.emacs.d/.cache/dumps/spacemacs-27.1.pdmp
+   ;; (default spacemacs-27.1.pdmp)
+   dotspacemacs-emacs-dumper-dump-file (format "spacemacs-%s.pdmp" emacs-version)
 
    ;; If non-nil ELPA repositories are contacted via HTTPS whenever it's
    ;; possible. Set it to nil if you have no way to use HTTPS in your
@@ -162,6 +165,13 @@ It should only modify the values of Spacemacs settings."
    ;; performance issues due to garbage collection operations.
    ;; (default '(100000000 0.1))
    dotspacemacs-gc-cons '(100000000 0.1)
+
+   ;; Set `read-process-output-max' when startup finishes.
+   ;; This defines how much data is read from a foreign process.
+   ;; Setting this >= 1 MB should increase performance for lsp servers
+   ;; in emacs 27.
+   ;; (default (* 1024 1024))
+   dotspacemacs-read-process-output-max (* 1024 1024)
 
    ;; If non-nil then Spacelpa repository is the primary source to install
    ;; a locked version of packages. If nil then Spacemacs will install the
@@ -190,6 +200,11 @@ It should only modify the values of Spacemacs settings."
    ;; section of the documentation for details on available variables.
    ;; (default 'vim)
    dotspacemacs-editing-style 'hybrid
+
+   ;; If non-nil show the version string in the Spacemacs buffer. It will
+   ;; appear as (spacemacs version)@(emacs version)
+   ;; (default t)
+   dotspacemacs-startup-buffer-show-version t
 
    ;; Specify the startup banner. Default value is `official', it displays
    ;; the official spacemacs logo. An integer value is the index of text
@@ -227,8 +242,8 @@ It should only modify the values of Spacemacs settings."
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
-                         spacemacs-dark
                          leuven
+                         spacemacs-dark
                          doom-one-light
                          doom-gruvbox
                          doom-one
@@ -274,8 +289,10 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-major-mode-leader-key ","
 
    ;; Major mode leader key accessible in `emacs state' and `insert state'.
-   ;; (default "C-M-m")
-   dotspacemacs-major-mode-emacs-leader-key "C-M-m"
+   ;; (default "C-M-m" for terminal mode, "<M-return>" for GUI mode).
+   ;; Thus M-RET should work as leader key in both GUI and terminal modes.
+   ;; C-M-m also should work in terminal mode, but not in GUI mode.
+   dotspacemacs-major-mode-emacs-leader-key (if window-system "<M-return>" "C-M-m")
 
    ;; These variables control whether separate commands are bound in the GUI to
    ;; the key pairs `C-i', `TAB' and `C-m', `RET'.
@@ -339,7 +356,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil a progress bar is displayed when spacemacs is loading. This
    ;; may increase the boot time on some systems and emacs builds, set it to
    ;; nil to boost the loading time. (default t)
-   dotspacemacs-loading-progress-bar nil
+   dotspacemacs-loading-progress-bar t
 
    ;; If non-nil the frame is fullscreen when Emacs starts up. (default nil)
    ;; (Emacs 24.4+ only)
@@ -473,6 +490,13 @@ It should only modify the values of Spacemacs settings."
    ;; (default nil)
    dotspacemacs-whitespace-cleanup nil
 
+   ;; If non nil activate `clean-aindent-mode' which tries to correct
+   ;; virtual indentation of simple modes. This can interfer with mode specific
+   ;; indent handling like has been reported for `go-mode'.
+   ;; If it does deactivate it here.
+   ;; (default t)
+   dotspacemacs-use-clean-aindent-mode t
+
    ;; Either nil or a number of seconds. If non-nil zone out after the specified
    ;; number of seconds. (default nil)
    dotspacemacs-zone-out-when-idle nil
@@ -499,14 +523,15 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
   (setq configuration-layer-elpa-archives
         '(
-           ("gnu" . "elpa.gnu.org/packages/")
-           ("melpa" . "melpa.org/packages/")
-           ("org" . "orgmode.org/elpa/")
-           ("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-           ("org-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
-           ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+          ("gnu" . "elpa.gnu.org/packages/")
+          ("melpa" . "melpa.org/packages/")
+          ("org" . "orgmode.org/elpa/")
+          ("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+          ("org-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
+          ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
           )
         )
+
   )
 
 (defun dotspacemacs/user-load ()
@@ -522,17 +547,6 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-
-
-  ;; Since version 0.104, spacemacs uses the org version from the org ELPA
-  ;; repository instead of the one shipped with emacs. Then, any org related
-  ;; code should not be loaded before dotspacemacs/user-config, otherwise both
-  ;; versions will be loaded and will conflict. Because of autoloading, calling
-  ;; to org functions will trigger the loading up of the org shipped with emacs
-  ;; which will induce conflicts. One way to avoid conflict is to wrap your org
-  ;; config code in a with-eval-after-load block like this:
-  ;; org configuration
-
 
   (with-eval-after-load 'org
     ;; reveal.js 本地路径
@@ -550,57 +564,5 @@ before packages are loaded."
 
   )
 
-
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
-(defun dotspacemacs/emacs-custom-settings ()
-  "Emacs custom settings.
-This is an auto-generated function, do not modify its content directly, use
-Emacs customize menu instead.
-This function is called at the very end of Spacemacs initialization."
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ansi-color-faces-vector
-   [default default default italic underline success warning error])
- '(evil-want-Y-yank-to-eol nil)
- '(fci-rule-color "#555556")
- '(jdee-db-active-breakpoint-face-colors (cons "#1B2229" "#fd971f"))
- '(jdee-db-requested-breakpoint-face-colors (cons "#1B2229" "#b6e63e"))
- '(jdee-db-spec-breakpoint-face-colors (cons "#1B2229" "#525254"))
- '(objed-cursor-color "#e74c3c")
- '(package-selected-packages
-   '(sqlup-mode grizzl godoctor go-gen-test go-fill-struct flycheck-golangci-lint go-mode yaml-mode drag-stuff lsp-pyre web-mode web-beautify tagedit slim-mode scss-mode sass-mode pug-mode prettier-js impatient-mode simple-httpd helm-css-scss haml-mode emmet-mode counsel-css company-web web-completion-data add-node-modules-path toml-mode racer pos-tip helm-gtags ggtags flycheck-rust dap-mode lsp-treemacs bui lsp-mode dash-functional counsel-gtags counsel swiper ivy company cargo markdown-mode rust-mode ws-butler writeroom-mode visual-fill-column winum volatile-highlights vi-tilde-fringe uuidgen treemacs-projectile treemacs-persp treemacs-evil treemacs ht pfuture toc-org symon symbol-overlay string-inflection spaceline-all-the-icons spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode password-generator paradox spinner overseer org-bullets open-junk-file nameless move-text macrostep lorem-ipsum link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-xref helm-themes helm-swoop helm-purpose window-purpose imenu-list helm-projectile projectile helm-mode-manager helm-make helm-ls-git helm-flx helm-descbinds helm-ag google-translate golden-ratio flycheck-package package-lint flycheck pkg-info epl let-alist flycheck-elsa flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state iedit evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens smartparens paredit evil-args evil-anzu anzu eval-sexp-fu elisp-slime-nav editorconfig dumb-jump doom-modeline shrink-path all-the-icons memoize f dash s devdocs define-word column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile packed aggressive-indent ace-window ace-link ace-jump-helm-line helm avy helm-core popup which-key use-package pcre2el org-plus-contrib hydra lv hybrid-mode font-lock+ evil goto-chg undo-tree dotenv-mode diminish bind-map bind-key async))
- '(rustic-ansi-faces
-   ["#1c1e1f" "#e74c3c" "#b6e63e" "#e2c770" "#268bd2" "#fb2874" "#66d9ef" "#d6d6d4"])
- '(vc-annotate-background "#1c1e1f")
- '(vc-annotate-color-map
-   (list
-    (cons 20 "#b6e63e")
-    (cons 40 "#c4db4e")
-    (cons 60 "#d3d15f")
-    (cons 80 "#e2c770")
-    (cons 100 "#ebb755")
-    (cons 120 "#f3a73a")
-    (cons 140 "#fd971f")
-    (cons 160 "#fc723b")
-    (cons 180 "#fb4d57")
-    (cons 200 "#fb2874")
-    (cons 220 "#f43461")
-    (cons 240 "#ed404e")
-    (cons 260 "#e74c3c")
-    (cons 280 "#c14d41")
-    (cons 300 "#9c4f48")
-    (cons 320 "#77504e")
-    (cons 340 "#555556")
-    (cons 360 "#555556")))
- '(vc-annotate-very-old-color nil))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-)
