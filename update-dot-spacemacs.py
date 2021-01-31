@@ -19,8 +19,7 @@ dotspcemacs_configuration_layers = """
           org-enable-reveal-js-support t
           org-enable-github-support t
           )
-     (helm :variables
-           avy-timeout-seconds 0.5)
+     ivy
      emacs-lisp
      (treemacs :variables
                treemacs-use-all-the-icons-theme t
@@ -36,6 +35,7 @@ dotspcemacs_configuration_layers = """
      git
      sql
      html
+     imenu-list
      java
      javascript
      (python :variables
@@ -199,8 +199,10 @@ Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
   (with-eval-after-load 'org
-    ;; reveal.js 本地路径
-    (setq org-re-reveal-root "~/workspace/reveal.js")
+    ;; for local
+    ;; (setq org-re-reveal-root "~/workspace/reveal.js")
+    ;; for network
+    (setq org-re-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js@3.8.0")
     )
 
   ;; setup flycheck using python3
