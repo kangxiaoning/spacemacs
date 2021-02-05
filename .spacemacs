@@ -48,8 +48,7 @@ This function should only modify configuration layer settings."
           org-enable-reveal-js-support t
           org-enable-github-support t
           )
-     (helm :variables
-           avy-timeout-seconds 0.5)
+     ivy
      emacs-lisp
      (treemacs :variables
                treemacs-use-all-the-icons-theme t
@@ -65,6 +64,7 @@ This function should only modify configuration layer settings."
      git
      sql
      html
+     imenu-list
      java
      javascript
      (python :variables
@@ -511,6 +511,9 @@ It should only modify the values of Spacemacs settings."
    ;; (default nil - same as frame-title-format)
    dotspacemacs-icon-title-format nil
 
+   ;; Show trailing whitespace (default t)
+   dotspacemacs-show-trailing-whitespace t
+
    ;; Delete whitespace while saving buffer. Possible values are `all'
    ;; to aggressively delete empty line and long sequences of whitespace,
    ;; `trailing' to delete only the whitespace at end of lines, `changed' to
@@ -543,7 +546,10 @@ It should only modify the values of Spacemacs settings."
 
    ;; If nil the home buffer shows the full path of agenda items
    ;; and todos. If non nil only the file name is shown.
-   dotspacemacs-home-shorten-agenda-source nil))
+   dotspacemacs-home-shorten-agenda-source nil
+
+   ;; If non-nil then byte-compile some of Spacemacs files.
+   dotspacemacs-byte-compile nil))
 
 (defun dotspacemacs/user-env ()
   "Environment variables setup.
@@ -593,8 +599,10 @@ Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
   (with-eval-after-load 'org
-    ;; reveal.js 本地路径
-    (setq org-re-reveal-root "~/workspace/reveal.js")
+    ;; for local
+    ;; (setq org-re-reveal-root "~/workspace/reveal.js")
+    ;; for network
+    (setq org-re-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js@3.8.0")
     )
 
   ;; setup flycheck using python3
@@ -608,6 +616,8 @@ before packages are loaded."
     (advice-add 'flycheck-relevant-error-other-file-p :override (lambda (&rest args) nil)))
 
   (setq projectile-project-search-path '("~/workspace"))
+
+  (remove-hook 'go-mode-hook 'flycheck-mode)
 
   )
 

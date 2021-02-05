@@ -217,6 +217,8 @@ before packages are loaded."
 
   (setq projectile-project-search-path '("~/workspace"))
 
+  (remove-hook 'go-mode-hook 'flycheck-mode)
+
   )
 """
 
