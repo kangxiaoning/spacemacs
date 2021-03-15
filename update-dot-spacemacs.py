@@ -12,7 +12,6 @@ dotspcemacs_configuration_layers = """
    '(
      auto-completion
      better-defaults
-     emoji
      markdown
      multiple-cursors
      (org :variables
@@ -27,17 +26,12 @@ dotspcemacs_configuration_layers = """
                )
 
      ;; for configuration management
-     nginx
      yaml
 
      ;; for development environment
-     asm
      git
-     sql
      html
-     imenu-list
-     java
-     javascript
+     shell-scripts
      (python :variables
              python-backend 'lsp
              python-formatter 'black
@@ -52,18 +46,6 @@ dotspcemacs_configuration_layers = """
          go-tab-width 4
          go-format-before-save t
          gofmt-command "goimports")
-     (c-c++ :variables
-            c-c++-backend 'lsp-clangd
-            c-c++-enable-clang-format-on-save t
-            c-c++-enable-google-style t
-            c-c++-enable-google-newline t
-            )
-     semantic
-     cscope
-     (dap :variables
-          dap-python-executable "/usr/local/bin/python3"
-          dap-auto-configure-mode t
-          )
      (lsp :variables
           lsp-ui-doc-enable nil
           lsp-rust-server 'rust-analyzer
@@ -89,8 +71,8 @@ def update_layers(dotspacemacs: str) -> str:
 dotspacemacs_themes = """
    dotspacemacs-themes '(
                          monokai
-                         gruvbox-dark-hard
                          doom-one
+                         gruvbox-dark-hard
                          spacemacs-dark
                          spacemacs-light
                          leuven
@@ -165,9 +147,6 @@ configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
-
-  (setq insert-directory-program "/usr/local/opt/coreutils/bin/gls")
-
   (setq configuration-layer-elpa-archives
         '(
           ("gnu" . "elpa.gnu.org/packages/")
@@ -208,16 +187,15 @@ before packages are loaded."
   ;; setup flycheck using python3
   (setq flycheck-python-pycompile-executable "python3")
 
-  ;; EmacsClient
-  (evil-leader/set-key
-    "q q" 'spacemacs/frame-killer)
-
-  (with-eval-after-load 'flycheck
-    (advice-add 'flycheck-relevant-error-other-file-p :override (lambda (&rest args) nil)))
-
   (setq projectile-project-search-path '("~/workspace"))
 
   (remove-hook 'go-mode-hook 'flycheck-mode)
+
+  (setq-default evil-escape-delay 0.2)
+
+  (setq lsp-diagnostic-package :none)
+
+  (setq python-indent-guess-indent-offset-verbose nil)
 
   )
 """
