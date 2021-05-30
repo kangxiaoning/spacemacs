@@ -41,7 +41,6 @@ This function should only modify configuration layer settings."
    '(
      auto-completion
      better-defaults
-     emoji
      markdown
      multiple-cursors
      (org :variables
@@ -56,17 +55,12 @@ This function should only modify configuration layer settings."
                )
 
      ;; for configuration management
-     nginx
      yaml
 
      ;; for development environment
-     asm
      git
-     sql
      html
-     imenu-list
-     java
-     javascript
+     shell-scripts
      (python :variables
              python-backend 'lsp
              python-formatter 'black
@@ -81,18 +75,6 @@ This function should only modify configuration layer settings."
          go-tab-width 4
          go-format-before-save t
          gofmt-command "goimports")
-     (c-c++ :variables
-            c-c++-backend 'lsp-clangd
-            c-c++-enable-clang-format-on-save t
-            c-c++-enable-google-style t
-            c-c++-enable-google-newline t
-            )
-     semantic
-     cscope
-     (dap :variables
-          dap-python-executable "/usr/local/bin/python3"
-          dap-auto-configure-mode t
-          )
      (lsp :variables
           lsp-ui-doc-enable nil
           lsp-rust-server 'rust-analyzer
@@ -241,6 +223,12 @@ It should only modify the values of Spacemacs settings."
    ;; True if the home buffer should respond to resize events. (default t)
    dotspacemacs-startup-buffer-responsive t
 
+   ;; Show numbers before the startup list lines. (default t)
+   dotspacemacs-show-startup-list-numbers t
+
+   ;; The minimum delay in seconds between number key presses. (default 0.4)
+   dotspacemacs-startup-buffer-multi-digit-delay 0.4
+
    ;; Default major mode for a new empty buffer. Possible values are mode
    ;; names such as `text-mode'; and `nil' to use Fundamental mode.
    ;; (default `text-mode')
@@ -267,8 +255,8 @@ It should only modify the values of Spacemacs settings."
    
    dotspacemacs-themes '(
                          monokai
-                         gruvbox-dark-hard
                          doom-one
+                         gruvbox-dark-hard
                          spacemacs-dark
                          spacemacs-light
                          leuven
@@ -430,6 +418,10 @@ It should only modify the values of Spacemacs settings."
    ;; when it reaches the top or bottom of the screen. (default t)
    dotspacemacs-smooth-scrolling t
 
+   ;; Show the scroll bar while scrolling. The auto hide time can be configured
+   ;; by setting this variable to a number. (default t)
+   dotspacemacs-scroll-bar-while-scrolling t
+
    ;; Control line numbers activation.
    ;; If set to `t', `relative' or `visual' then line numbers are enabled in all
    ;; `prog-mode' and `text-mode' derivatives. If set to `relative', line
@@ -454,9 +446,14 @@ It should only modify the values of Spacemacs settings."
    ;; (default 'evil)
    dotspacemacs-folding-method 'evil
 
-   ;; If non-nil `smartparens-strict-mode' will be enabled in programming modes.
+   ;; If non-nil and `dotspacemacs-activate-smartparens-mode' is also non-nil,
+   ;; `smartparens-strict-mode' will be enabled in programming modes.
    ;; (default nil)
    dotspacemacs-smartparens-strict-mode t
+
+   ;; If non-nil smartparens-mode will be enabled in programming modes.
+   ;; (default t)
+   dotspacemacs-activate-smartparens-mode t
 
    ;; If non-nil pressing the closing parenthesis `)' key in insert mode passes
    ;; over any automatically added closing parenthesis, bracket, quote, etc...
@@ -504,6 +501,9 @@ It should only modify the values of Spacemacs settings."
    ;; %n - Narrow if appropriate
    ;; %z - mnemonics of buffer, terminal, and keyboard coding systems
    ;; %Z - like %z, but including the end-of-line format
+   ;; If nil then Spacemacs uses default `frame-title-format' to avoid
+   ;; performance issues, instead of calculating the frame title by
+   ;; `spacemacs/title-prepare' all the time.
    ;; (default "%I@%S")
    dotspacemacs-frame-title-format "%I@%S"
 
@@ -527,6 +527,9 @@ It should only modify the values of Spacemacs settings."
    ;; If it does deactivate it here.
    ;; (default t)
    dotspacemacs-use-clean-aindent-mode t
+
+   ;; Accept SPC as y for prompts if non nil. (default nil)
+   dotspacemacs-use-SPC-as-y nil
 
    ;; If non-nil shift your number row to match the entered keyboard layout
    ;; (only in insert state). Currently supported keyboard layouts are:
@@ -567,9 +570,6 @@ configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
-
-  (setq insert-directory-program "/usr/local/opt/coreutils/bin/gls")
-
   (setq configuration-layer-elpa-archives
         '(
           ("gnu" . "elpa.gnu.org/packages/")
@@ -583,12 +583,13 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
   )
 
 
+
 (defun dotspacemacs/user-load ()
   "Library to load while dumping.
 This function is called only while dumping Spacemacs configuration. You can
 `require' or `load' the libraries of your choice that will be included in the
-dump."
-  )
+dump.")
+
 
 
 (defun dotspacemacs/user-config ()
@@ -608,18 +609,18 @@ before packages are loaded."
   ;; setup flycheck using python3
   (setq flycheck-python-pycompile-executable "python3")
 
-  ;; EmacsClient
-  (evil-leader/set-key
-    "q q" 'spacemacs/frame-killer)
-
-  (with-eval-after-load 'flycheck
-    (advice-add 'flycheck-relevant-error-other-file-p :override (lambda (&rest args) nil)))
-
   (setq projectile-project-search-path '("~/workspace"))
 
   (remove-hook 'go-mode-hook 'flycheck-mode)
 
+  (setq-default evil-escape-delay 0.2)
+
+  (setq lsp-diagnostic-package :none)
+
+  (setq python-indent-guess-indent-offset-verbose nil)
+
   )
+
 
 
 ;; Do not write anything past this comment. This is where Emacs will

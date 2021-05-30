@@ -152,9 +152,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
           ("gnu" . "elpa.gnu.org/packages/")
           ("melpa" . "melpa.org/packages/")
           ("org" . "orgmode.org/elpa/")
-          ("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-          ("org-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
-          ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+          ("nongnu" . "https://elpa.nongnu.org/nongnu/")
           )
         )
   )
@@ -192,10 +190,6 @@ before packages are loaded."
   (remove-hook 'go-mode-hook 'flycheck-mode)
 
   (setq-default evil-escape-delay 0.2)
-
-  (setq lsp-diagnostic-package :none)
-
-  (setq python-indent-guess-indent-offset-verbose nil)
 
   )
 """
