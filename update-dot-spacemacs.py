@@ -191,6 +191,8 @@ before packages are loaded."
 
   (setq-default evil-escape-delay 0.2)
 
+  (setq lsp-diagnostics-provider :none)
+
   )
 """
 
