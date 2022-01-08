@@ -151,7 +151,6 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
         '(
           ("gnu" . "elpa.gnu.org/packages/")
           ("melpa" . "melpa.org/packages/")
-          ("org" . "orgmode.org/elpa/")
           ("nongnu" . "https://elpa.nongnu.org/nongnu/")
           )
         )
