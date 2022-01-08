@@ -60,7 +60,7 @@ dotspcemacs_configuration_layers = """
 
 def update_layers(dotspacemacs: str) -> str:
     layers_pattern = re.compile(
-        r"(dotspacemacs-configuration-layers\s+'\(\s+.*treemacs\))", re.DOTALL
+        r"(\s*dotspacemacs-configuration-layers\s+'\(\s+.*treemacs\))", re.DOTALL
     )
     dotspacemacs = re.sub(
         layers_pattern, dotspcemacs_configuration_layers, dotspacemacs
@@ -89,12 +89,12 @@ default_font = """
 
 def update_init(dotspacemacs: str) -> str:
     themes_pattern = re.compile(
-        r"dotspacemacs-themes '\(.*spacemacs-light\)", re.DOTALL
+        r"\s*dotspacemacs-themes '\(.*spacemacs-light\)", re.DOTALL
     )
     dotspacemacs = re.sub(themes_pattern, dotspacemacs_themes, dotspacemacs)
 
     font_pattern = re.compile(
-        r"dotspacemacs-default-font '\(.*:width normal\)", re.DOTALL
+        r"\s*dotspacemacs-default-font '\(.*:width normal\)", re.DOTALL
     )
     dotspacemacs = re.sub(font_pattern, default_font, dotspacemacs)
 

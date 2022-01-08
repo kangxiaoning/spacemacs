@@ -31,7 +31,6 @@ This function should only modify configuration layer settings."
    dotspacemacs-configuration-layer-path '()
 
    ;; List of configuration layers to load.
-   
    ;; ----------------------------------------------------------------
    ;; Example of useful layers you may want to use right away.
    ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
@@ -252,7 +251,6 @@ It should only modify the values of Spacemacs settings."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   
    dotspacemacs-themes '(
                          monokai
                          doom-one
@@ -279,7 +277,6 @@ It should only modify the values of Spacemacs settings."
    ;; Default font or prioritized list of fonts. The `:size' can be specified as
    ;; a non-negative integer (pixel size), or a floating-point (point size).
    ;; Point size is recommended, because it's device independent. (default 10.0)
-   
    dotspacemacs-default-font '("Source Code Pro"
                                :size 12.0
                                :weight normal
@@ -575,7 +572,6 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
         '(
           ("gnu" . "elpa.gnu.org/packages/")
           ("melpa" . "melpa.org/packages/")
-          ("org" . "orgmode.org/elpa/")
           ("nongnu" . "https://elpa.nongnu.org/nongnu/")
           )
         )
