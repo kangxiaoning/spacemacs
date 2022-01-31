@@ -32,6 +32,11 @@ dotspcemacs_configuration_layers = """
      git
      html
      shell-scripts
+     (c-c++ :variables
+            c-c++-enable-google-style t
+            c-c++-backend 'lsp-clangd
+            c-c++-enable-clang-format-on-save t
+            )
      (python :variables
              python-backend 'lsp
              python-formatter 'black
