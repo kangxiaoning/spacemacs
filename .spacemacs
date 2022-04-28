@@ -60,6 +60,11 @@ This function should only modify configuration layer settings."
      git
      html
      shell-scripts
+     (c-c++ :variables
+            c-c++-enable-google-style t
+            c-c++-backend 'lsp-clangd
+            c-c++-enable-clang-format-on-save t
+            )
      (python :variables
              python-backend 'lsp
              python-formatter 'black
@@ -119,9 +124,13 @@ It should only modify the values of Spacemacs settings."
   ;; This setq-default sexp is an exhaustive list of all the supported
   ;; spacemacs settings.
   (setq-default
-   ;; If non-nil then enable support for the portable dumper. You'll need
-   ;; to compile Emacs 27 from source following the instructions in file
+   ;; If non-nil then enable support for the portable dumper. You'll need to
+   ;; compile Emacs 27 from source following the instructions in file
    ;; EXPERIMENTAL.org at to root of the git repository.
+   ;;
+   ;; WARNING: pdumper does not work with Native Compilation, so it's disabled
+   ;; regardless of the following setting when native compilation is in effect.
+   ;;
    ;; (default nil)
    dotspacemacs-enable-emacs-pdumper t
 
