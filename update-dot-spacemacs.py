@@ -33,7 +33,11 @@ dotspcemacs_configuration_layers = """
      git
      html
      shell-scripts
-(c-c++ :variables
+     (cmake :variables
+            cmake-backend 'company-cmake
+            cmake-enable-cmake-ide-support t
+            )
+     (c-c++ :variables
             c-c++-enable-google-style t
             c-c++-backend 'lsp-clangd
             c-c++-enable-clang-format-on-save t

@@ -38,6 +38,7 @@ This function should only modify configuration layer settings."
    ;; ----------------------------------------------------------------
    dotspacemacs-configuration-layers
    '(
+     protobuf
      auto-completion
      better-defaults
      markdown
@@ -60,6 +61,10 @@ This function should only modify configuration layer settings."
      git
      html
      shell-scripts
+     (cmake :variables
+            cmake-backend 'company-cmake
+            cmake-enable-cmake-ide-support t
+            )
      (c-c++ :variables
             c-c++-enable-google-style t
             c-c++-backend 'lsp-clangd
@@ -237,6 +242,11 @@ It should only modify the values of Spacemacs settings."
    ;; The minimum delay in seconds between number key presses. (default 0.4)
    dotspacemacs-startup-buffer-multi-digit-delay 0.4
 
+   ;; If non-nil, show file icons for entries and headings on Spacemacs home buffer.
+   ;; This has no effect in terminal or if "all-the-icons" package or the font
+   ;; is not installed. (default nil)
+   dotspacemacs-startup-buffer-show-icons nil
+
    ;; Default major mode for a new empty buffer. Possible values are mode
    ;; names such as `text-mode'; and `nil' to use Fundamental mode.
    ;; (default `text-mode')
@@ -382,7 +392,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil the frame is fullscreen when Emacs starts up. (default nil)
    ;; (Emacs 24.4+ only)
-   dotspacemacs-fullscreen-at-startup t
+   dotspacemacs-fullscreen-at-startup nil
 
    ;; If non-nil `spacemacs/toggle-fullscreen' will not use native fullscreen.
    ;; Use to disable fullscreen animations in OSX. (default nil)
@@ -606,9 +616,9 @@ before packages are loaded."
 
   (with-eval-after-load 'org
     ;; for local
-    ;; (setq org-re-reveal-root "~/workspace/reveal.js")
+    (setq org-re-reveal-root "/Users/kangxiaoning/workspace/reveal.js")
     ;; for network
-    (setq org-re-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js@3.8.0")
+    ;; (setq org-re-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js@3.8.0")
     )
 
   ;; setup flycheck using python3
