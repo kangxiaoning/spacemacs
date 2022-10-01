@@ -199,7 +199,7 @@ before packages are loaded."
   (remove-hook 'go-mode-hook 'flycheck-mode)
 
   (setq-default evil-escape-delay 0.2)
-  (setq-default evil-escape-key-sequence "jk"))
+  (setq-default evil-escape-key-sequence "jk")
 
   (setq lsp-diagnostics-provider :none)
 
