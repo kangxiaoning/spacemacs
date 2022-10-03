@@ -21,6 +21,9 @@ dotspcemacs_configuration_layers = """
           )
      ivy
      emacs-lisp
+     (vimscript :variables
+                vimscript-backend 'company-vimscript
+                )
      (treemacs :variables
                treemacs-use-all-the-icons-theme t
                treemacs-git-mode 'deferred
