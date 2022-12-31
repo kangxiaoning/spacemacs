@@ -17,7 +17,6 @@ dotspcemacs_configuration_layers = """
      multiple-cursors
      (org :variables
           org-enable-reveal-js-support t
-          org-enable-github-support t
           )
      ivy
      emacs-lisp
@@ -36,6 +35,10 @@ dotspcemacs_configuration_layers = """
      git
      html
      shell-scripts
+     (syntax-checking :variables
+                      syntax-checking-enable-by-default nil
+                      syntax-checking-enable-tooltips nil
+                      )
      (cmake :variables
             cmake-backend 'company-cmake
             cmake-enable-cmake-ide-support t
@@ -112,8 +115,8 @@ def update_init(dotspacemacs: str) -> str:
     dotspacemacs = re.sub(font_pattern, default_font, dotspacemacs)
 
     dotspacemacs = re.sub(
-        "dotspacemacs-enable-emacs-pdumper nil",
         "dotspacemacs-enable-emacs-pdumper t",
+        "dotspacemacs-enable-emacs-pdumper nil",
         dotspacemacs,
     )
     dotspacemacs = re.sub(
@@ -126,7 +129,7 @@ def update_init(dotspacemacs: str) -> str:
     )
     dotspacemacs = re.sub(
         r"dotspacemacs-mode-line-theme '\(spacemacs :separator wave :separator-scale 1.5\)",
-        "dotspacemacs-mode-line-theme '(doom :separator arrow :separator-scale 1.5)",
+        "dotspacemacs-mode-line-theme '(all-the-icons :separator arrow :separator-scale 1.5)",
         dotspacemacs,
     )
     dotspacemacs = re.sub(
@@ -162,9 +165,12 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
   (setq configuration-layer-elpa-archives
         '(
-          ("gnu" . "elpa.gnu.org/packages/")
-          ("melpa" . "melpa.org/packages/")
-          ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+          ("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+          ("org-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
+          ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+          ;; ("gnu" . "elpa.gnu.org/packages/")
+          ;; ("melpa" . "melpa.org/packages/")
+          ;; ("nongnu" . "https://elpa.nongnu.org/nongnu/")
           )
         )
   )
@@ -194,16 +200,13 @@ before packages are loaded."
     (setq org-re-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js@3.8.0")
     )
 
-  ;; setup flycheck using python3
-  (setq flycheck-python-pycompile-executable "python3")
 
   (setq projectile-project-search-path '("~/workspace"))
-
-  (remove-hook 'go-mode-hook 'flycheck-mode)
 
   (setq-default evil-escape-delay 0.2)
   (setq-default evil-escape-key-sequence "jk")
 
+  ;; disable Flycheck
   (setq lsp-diagnostics-provider :none)
 
   )

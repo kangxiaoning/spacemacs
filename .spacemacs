@@ -45,10 +45,12 @@ This function should only modify configuration layer settings."
      multiple-cursors
      (org :variables
           org-enable-reveal-js-support t
-          org-enable-github-support t
           )
      ivy
      emacs-lisp
+     (vimscript :variables
+                vimscript-backend 'company-vimscript
+                )
      (treemacs :variables
                treemacs-use-all-the-icons-theme t
                treemacs-git-mode 'deferred
@@ -61,6 +63,10 @@ This function should only modify configuration layer settings."
      git
      html
      shell-scripts
+     (syntax-checking :variables
+                      syntax-checking-enable-by-default nil
+                      syntax-checking-enable-tooltips nil
+                      )
      (cmake :variables
             cmake-backend 'company-cmake
             cmake-enable-cmake-ide-support t
@@ -137,7 +143,7 @@ It should only modify the values of Spacemacs settings."
    ;; regardless of the following setting when native compilation is in effect.
    ;;
    ;; (default nil)
-   dotspacemacs-enable-emacs-pdumper t
+   dotspacemacs-enable-emacs-pdumper nil
 
    ;; Name of executable file pointing to emacs 27+. This executable must be
    ;; in your PATH.
@@ -220,6 +226,13 @@ It should only modify the values of Spacemacs settings."
    ;; If the value is nil then no banner is displayed. (default 'official)
    dotspacemacs-startup-banner 'official
 
+   ;; Scale factor controls the scaling (size) of the startup banner. Default
+   ;; value is `auto' for scaling the logo automatically to fit all buffer
+   ;; contents, to a maximum of the full image height and a minimum of 3 line
+   ;; heights. If set to a number (int or float) it is used as a constant
+   ;; scaling factor for the default logo size.
+   dotspacemacs-startup-banner-scale 'auto
+
    ;; List of items to show in startup buffer or an association list of
    ;; the form `(list-type . list-size)`. If nil then it is disabled.
    ;; Possible values for list-type are:
@@ -287,7 +300,7 @@ It should only modify the values of Spacemacs settings."
    ;; refer to the DOCUMENTATION.org for more info on how to create your own
    ;; spaceline theme. Value can be a symbol or list with additional properties.
    ;; (default '(spacemacs :separator wave :separator-scale 1.5))
-   dotspacemacs-mode-line-theme '(doom :separator arrow :separator-scale 1.5)
+   dotspacemacs-mode-line-theme '(all-the-icons :separator arrow :separator-scale 1.5)
 
    ;; If non-nil the cursor color matches the state color in GUI Emacs.
    ;; (default t)
@@ -392,7 +405,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil the frame is fullscreen when Emacs starts up. (default nil)
    ;; (Emacs 24.4+ only)
-   dotspacemacs-fullscreen-at-startup nil
+   dotspacemacs-fullscreen-at-startup t
 
    ;; If non-nil `spacemacs/toggle-fullscreen' will not use native fullscreen.
    ;; Use to disable fullscreen animations in OSX. (default nil)
@@ -400,12 +413,12 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
-   ;; (default nil) (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup nil
+   ;; (default t) (Emacs 24.4+ only)
+   dotspacemacs-maximized-at-startup t
 
    ;; If non-nil the frame is undecorated when Emacs starts up. Combine this
-   ;; variable with `dotspacemacs-maximized-at-startup' in OSX to obtain
-   ;; borderless fullscreen. (default nil)
+   ;; variable with `dotspacemacs-maximized-at-startup' to obtain fullscreen
+   ;; without external boxes. Also disables the internal border. (default nil)
    dotspacemacs-undecorated-at-startup nil
 
    ;; A value from the range (0..100), in increasing opacity, which describes
@@ -417,6 +430,11 @@ It should only modify the values of Spacemacs settings."
    ;; the transparency level of a frame when it's inactive or deselected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
    dotspacemacs-inactive-transparency 90
+
+   ;; A value from the range (0..100), in increasing opacity, which describes the
+   ;; transparency level of a frame background when it's active or selected. Transparency
+   ;; can be toggled through `toggle-background-transparency'. (default 90)
+   dotspacemacs-background-transparency 90
 
    ;; If non-nil show the titles of transient states. (default t)
    dotspacemacs-show-transient-state-title t
@@ -527,7 +545,9 @@ It should only modify the values of Spacemacs settings."
    ;; (default nil - same as frame-title-format)
    dotspacemacs-icon-title-format nil
 
-   ;; Show trailing whitespace (default t)
+   ;; Color highlight trailing whitespace in all prog-mode and text-mode derived
+   ;; modes such as c++-mode, python-mode, emacs-lisp, html-mode, rst-mode etc.
+   ;; (default t)
    dotspacemacs-show-trailing-whitespace t
 
    ;; Delete whitespace while saving buffer. Possible values are `all'
@@ -589,9 +609,12 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
   (setq configuration-layer-elpa-archives
         '(
-          ("gnu" . "elpa.gnu.org/packages/")
-          ("melpa" . "melpa.org/packages/")
-          ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+          ("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+          ("org-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
+          ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+          ;; ("gnu" . "elpa.gnu.org/packages/")
+          ;; ("melpa" . "melpa.org/packages/")
+          ;; ("nongnu" . "https://elpa.nongnu.org/nongnu/")
           )
         )
   )
@@ -616,20 +639,18 @@ before packages are loaded."
 
   (with-eval-after-load 'org
     ;; for local
-    (setq org-re-reveal-root "/Users/kangxiaoning/workspace/reveal.js")
+    ;; (setq org-re-reveal-root "~/workspace/reveal.js")
     ;; for network
-    ;; (setq org-re-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js@3.8.0")
+    (setq org-re-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js@3.8.0")
     )
 
-  ;; setup flycheck using python3
-  (setq flycheck-python-pycompile-executable "python3")
 
   (setq projectile-project-search-path '("~/workspace"))
 
-  (remove-hook 'go-mode-hook 'flycheck-mode)
-
   (setq-default evil-escape-delay 0.2)
+  (setq-default evil-escape-key-sequence "jk")
 
+  ;; disable Flycheck
   (setq lsp-diagnostics-provider :none)
 
   )
