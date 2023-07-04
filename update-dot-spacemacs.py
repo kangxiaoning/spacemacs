@@ -209,6 +209,9 @@ before packages are loaded."
   ;; disable Flycheck
   (setq lsp-diagnostics-provider :none)
 
+  (spaceline-toggle-all-the-icons-flycheck-status-off)
+  (which-function-mode)
+
   )
 """
 
