@@ -66,6 +66,7 @@ dotspcemacs_configuration_layers = """
           lsp-ui-doc-enable nil
           lsp-rust-server 'rust-analyzer
           lsp-enable-file-watchers nil
+          lsp-modeline-diagnostics-enable nil
           )
      (shell :variables
             shell-default-height 30
@@ -209,8 +210,11 @@ before packages are loaded."
   ;; disable Flycheck
   (setq lsp-diagnostics-provider :none)
 
+  ;; remove wave underline in lsp headerline
+  (setq lsp-headerline-breadcrumb-enable-diagnostics nil)
+
+  ;; disable flycheck status in modeline
   (spaceline-toggle-all-the-icons-flycheck-status-off)
-  (which-function-mode)
 
   )
 """
