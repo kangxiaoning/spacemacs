@@ -67,6 +67,7 @@ dotspcemacs_configuration_layers = """
           lsp-rust-server 'rust-analyzer
           lsp-enable-file-watchers nil
           lsp-modeline-diagnostics-enable nil
+          lsp-headerline-breadcrumb-icons-enable nil
           )
      (shell :variables
             shell-default-height 30
