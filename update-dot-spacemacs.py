@@ -68,6 +68,8 @@ dotspcemacs_configuration_layers = """
           lsp-enable-file-watchers nil
           lsp-modeline-diagnostics-enable nil
           lsp-headerline-breadcrumb-icons-enable nil
+          lsp-headerline-breadcrumb-enable t
+          lsp-headerline-breadcrumb-enable-diagnostics nil
           )
      (shell :variables
             shell-default-height 30
@@ -98,8 +100,8 @@ dotspacemacs_themes = """
 """
 
 default_font = """
-   dotspacemacs-default-font '("Source Code Pro"
-                               :size 12.0
+   dotspacemacs-default-font '("JetBrains Mono"
+                               :size 13.0
                                :weight normal
                                :width normal)
 """
@@ -210,9 +212,6 @@ before packages are loaded."
 
   ;; disable Flycheck
   (setq lsp-diagnostics-provider :none)
-
-  ;; remove wave underline in lsp headerline
-  (setq lsp-headerline-breadcrumb-enable-diagnostics nil)
 
   ;; disable flycheck status in modeline
   (spaceline-toggle-all-the-icons-flycheck-status-off)
