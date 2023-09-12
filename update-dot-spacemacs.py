@@ -90,12 +90,11 @@ def update_layers(dotspacemacs: str) -> str:
 
 dotspacemacs_themes = """
    dotspacemacs-themes '(
-                         monokai
-                         doom-one
-                         gruvbox-dark-hard
-                         spacemacs-dark
+                         doom-one-light
                          spacemacs-light
-                         leuven
+                         doom-one
+                         spacemacs-dark
+                         monokai
                          )
 """
 
