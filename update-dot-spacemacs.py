@@ -195,6 +195,7 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
+  (setq evil-want-keybinding nil)
 
   (with-eval-after-load 'org
     ;; for local
@@ -208,9 +209,13 @@ before packages are loaded."
 
   (setq-default evil-escape-delay 0.2)
   (setq-default evil-escape-key-sequence "jk")
+  (define-key evil-normal-state-map (kbd "gb") 'evil-jump-backward)
 
   ;; disable Flycheck
   (setq lsp-diagnostics-provider :none)
+
+  ;; remove wave underline in lsp headerline
+  (setq lsp-headerline-breadcrumb-enable-diagnostics nil)
 
   ;; disable flycheck status in modeline
   (spaceline-toggle-all-the-icons-flycheck-status-off)
